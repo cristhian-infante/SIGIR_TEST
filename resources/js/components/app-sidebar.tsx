@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import {
-  Bot, LayoutGrid, List, Trash2, Package,
-  ChartColumnStacked
+  Bot, LayoutGrid, ChartBarStacked , Package,
+  Car ,PackageCheck, Locate
 
 } from "lucide-react"
 
@@ -33,25 +33,30 @@ const mainNavItems: NavItem[] = [
 ];
 const Menu: NavItem[] =[
     {
-        title: 'Categorias',
+        title: 'Repuestos',
         href: "category.index().url",
-        icon: ChartColumnStacked,
+        icon: PackageCheck ,
     },
-    // {
-    //     title: 'Marcas',
-    //     href: brands.index().url,
-    //     icon: ChartColumnStacked,
-    // },
-    // {
-    //     title: 'Productos',
-    //     href: product.index().url,
-    //     icon: Package,
-    // },
-    // {
-    //   title: 'Papelera',
-    //   href: category.trashed().url,
-    //   icon: Trash2, // Asegúrate de importar el icono
-    // } 
+    {
+        title: 'Vehículos',
+        href: "brands.index().url",
+        icon: Car ,
+    },
+    {
+        title: 'Proveedores',
+        href: "product.index().url",
+        icon: Package,
+    },
+    {
+      title: 'Categorias',
+      href: "category.trashed().url",
+      icon: ChartBarStacked , 
+    }, 
+    {
+      title: 'Ubicaciones',
+      href: "category.trashed().url",
+      icon: Locate  , 
+    } 
   ]
 const MenuDesplegable: NavItem[] = [
     {
