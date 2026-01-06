@@ -24,9 +24,34 @@ class CategoryService
         ];
     }
 
-    public function getAllCategories()
+    public function updateCategory($id, array $data)
     {
-        return Categoria::all()->map(fn($c) => $this->formatCategory($c));
+        $categoria = Categoria::findOrFail($id);
+        return $categoria->update($data);
+    }
+
+    public function toggleStatus($id)
+    {
+        $category = Categoria::withTrashed()->findOrFail($id);
+        $category->estado = !$category->estado;
+        return $category->save();
+    }
+
+    public function bulkStatus(array $ids, bool $status)
+    {
+        return Categoria::whereIn('id', $ids)->update(['estado' => $status]);
+    }
+
+    public function bulkDelete(array $ids)
+    {
+        return DB::transaction(fn() => Categoria::whereIn('id', $ids)->delete());
+    }
+
+    public function getAllCategories($perPage = null)
+    {
+        $query = Categoria::orderBy('created_at', 'desc');
+        $categories = $perPage ? $query->paginate($perPage) : $query->get();
+        return $categories->map(fn($c) => $this->formatCategory($c));
     }
 
     public function getAllTrashCategories()

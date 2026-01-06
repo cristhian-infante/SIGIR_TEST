@@ -32,11 +32,9 @@ class Categoria extends Model
             if (empty($categoria->codigo)) {
                 $categoria->codigo = $categoria->generarCodigo();
             }
-            if (empty($categoria->categoria_slug)) {
-                $categoria->categoria_slug = $categoria->generarSlug();
-            } else {
-                $categoria->categoria_slug = Str::slug($categoria->categoria_slug);
-            }
+            $categoria->categoria_slug = $categoria->categoria_slug 
+                ? Str::slug($categoria->categoria_slug) 
+                : $categoria->generarSlug();
         });
 
         static::updating(function ($categoria) {

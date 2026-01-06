@@ -59,7 +59,7 @@ export const ActionsCell = ({ categoria }: ActionsCellProps) => {
     };
 
     const handleDelete = () => {
-        router.delete(`/category/${categoria.id}`, { 
+        router.delete(`/category/destroy/${categoria.id}`, { 
             preserveState: true,
             preserveScroll: true
         });

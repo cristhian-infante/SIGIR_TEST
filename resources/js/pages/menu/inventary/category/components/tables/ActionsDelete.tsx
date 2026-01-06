@@ -36,7 +36,7 @@ export const ActionsCellDelete = ({ categoria }: { categoria: Categoria }) => {
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     const onRestore = () => {
-        router.patch(`/category/${categoria.id}/restore`, {}, {
+        router.post(`/category/restore/${categoria.id}`, {}, {
                 onSuccess: () => toast.success("¡Categoría recuperada!"),
                 onError: () => toast.error("No se pudo restaurar")
             });

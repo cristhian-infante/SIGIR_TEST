@@ -37,18 +37,15 @@ class CategoriaController extends Controller
 
     public function update(CategoriaRequest $request, $id)
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($request->validated());
+        $this->categoryService->updateCategory($id, $request->validated());
         return back()->with('success', 'Categoría actualizada correctamente');
     }
 
     public function toggleStatus($id)
     {
         try {
-            $category = Categoria::withTrashed()->findOrFail($id);
-            $category->estado = !$category->estado;
-            $category->save();
-            return back()->with('success', 'Estado actualizado correctamente');
+            $this->categoryService->toggleStatus($id);
+            return back()->with('success', 'Estado actualizado');
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'No se pudo actualizar el estado']);
         }
@@ -104,14 +101,14 @@ class CategoriaController extends Controller
     public function bulkDelete(Request $request)
     {
         $request->validate(['ids' => 'required|array', 'ids.*' => 'exists:categorias,id']);
-        Categoria::whereIn('id', $request->ids)->delete();
+        $this->categoryService->bulkDelete($request->ids);
         return back()->with('success', 'Categorías enviadas a papelera.');
     }
 
     public function bulkStatus(Request $request)
     {
         $request->validate(['ids' => 'required|array', 'status' => 'required|boolean']);
-        Categoria::whereIn('id', $request->ids)->update(['estado' => $request->status]);
+        $this->categoryService->bulkStatus($request->ids);
         return back()->with('success', 'Estados actualizados.');
     }
 }
